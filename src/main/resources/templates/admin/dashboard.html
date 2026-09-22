@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - KiloE</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../../static/css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+
+        <div th:replace="~{admin/fragments :: sidebar('dashboard')}"></div>
+
+        <div class="main-content">
+            <header class="admin-topbar"><h1>Admin Dashboard</h1></header>
+            <div class="admin-content">
+
+                <!-- Stats -->
+                <div class="stat-cards">
+                    <div class="stat-card">
+                        <div class="icon-box icon-yellow">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
+                        <p class="stat-value" th:text="${totalEvents}">0</p>
+                        <p class="stat-caption">Total Events</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon-box icon-red">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                        </div>
+                        <p class="stat-value" style="color: var(--red-600);" th:text="${pendingBookings}">0</p>
+                        <p class="stat-caption">Pending Bookings</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon-box icon-green">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <p class="stat-value" style="color: var(--primary-600);"
+                           th:text="${#numbers.formatDecimal(totalRevenue, 1, 0, 'COMMA') + ' ₮'}">₮0</p>
+                        <p class="stat-caption">Total Revenue</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon-box icon-blue">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        <p class="stat-value" th:text="${totalUsers}">0</p>
+                        <p class="stat-caption">Total Users</p>
+                    </div>
+                </div>
+
+                <!-- Recent Bookings -->
+                <div class="panel">
+                    <h2 class="panel-title">Recent Bookings</h2>
+                    <div class="recent-list" th:if="${!#lists.isEmpty(recentBookings)}">
+                        <div class="recent-row" th:each="b : ${recentBookings}">
+                            <div class="recent-avatar" th:text="${#strings.substring(b.eventTitle, 0, 1)}">K</div>
+                            <div class="recent-main">
+                                <p class="recent-title" th:text="${b.eventTitle}">Event</p>
+                                <p class="recent-sub">
+                                    <span th:text="${b.ticketQuantity}">1</span> ticket(s) ·
+                                    <span th:text="${#numbers.formatDecimal(b.total, 1, 0, 'COMMA')}">0</span> ₮
+                                </p>
+                            </div>
+                            <span class="badge" th:classappend="'status-' + ${b.status}" th:text="${b.status}">CONFIRMED</span>
+                        </div>
+                    </div>
+                    <div class="empty-state" th:if="${#lists.isEmpty(recentBookings)}">
+                        <h3>No bookings yet</h3>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

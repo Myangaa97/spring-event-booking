@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users - Admin | KiloE</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../../static/css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+
+        <div th:replace="~{admin/fragments :: sidebar('users')}"></div>
+
+        <div class="main-content">
+            <header class="admin-topbar">
+                <h1>Registered Users</h1>
+            </header>
+
+            <div class="admin-content">
+                <!-- SEARCH -->
+                <div class="table-toolbar" style="margin-bottom: 16px;">
+                    <div class="search-box" style="max-width: 360px;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        <input type="text" id="searchInput" placeholder="Search by name or email..." class="search-input">
+                    </div>
+                    <span id="userCount" style="color: var(--gray-500); font-size: 14px;"></span>
+                </div>
+
+                <!-- Table -->
+                <div class="panel" style="padding: 0; overflow: hidden;">
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div id="emptyTable" class="empty-state hidden"><h3>No users found</h3></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/admin-users.js}" src="../../static/js/admin-users.js"></script>
+</body>
+</html>

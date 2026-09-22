@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - KiloE</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../../static/css/style.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-inner">
+                <a th:href="@{/}" href="/" class="brand">
+                    <div class="brand-logo">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+                    </div>
+                    <span class="brand-name">Kilo<span>E</span></span>
+                </a>
+                <div class="nav-links">
+                    <a th:href="@{/}" class="nav-link">Home</a>
+                    <a th:href="@{/events}" class="nav-link">Events</a>
+                </div>
+                <div class="nav-actions">
+                    <a th:href="@{/customer/dashboard}" class="btn btn-outline">Dashboard</a>
+                    <a th:href="@{/logout}" class="btn btn-secondary">Sign Out</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <main>
+        <div class="container section" style="padding-top: 32px;">
+            <!-- Welcome -->
+            <div style="margin-bottom: 32px;">
+                <h1 class="page-title">
+                    Welcome back, <span th:text="${user.firstName}">User</span>!
+                </h1>
+                <p class="page-subtitle">Here's an overview of your bookings</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="stat-cards">
+                <div class="stat-card">
+                    <div class="icon-box icon-yellow">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+                    </div>
+                    <p class="stat-value" th:text="${totalBookings}">0</p>
+                    <p class="stat-caption">Total Bookings</p>
+                </div>
+                <div class="stat-card">
+                    <div class="icon-box icon-blue">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <p class="stat-value" th:text="${pendingCount}">0</p>
+                    <p class="stat-caption">Pending</p>
+                </div>
+                <div class="stat-card">
+                    <div class="icon-box icon-green">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <p class="stat-value" th:text="${confirmedCount}">0</p>
+                    <p class="stat-caption">Confirmed</p>
+                </div>
+                <div class="stat-card">
+                    <div class="icon-box icon-yellow">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <p class="stat-value">
+                        <span th:text="${#numbers.formatDecimal(totalSpent, 1, 0, 'COMMA')}">0</span> ₮
+                    </p>
+                    <p class="stat-caption">Total Spent</p>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="two-col" style="margin-bottom: 32px;">
+                <a th:href="@{/events}" class="panel venue-card-inner" style="align-items: center;">
+                    <div class="venue-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
+                    <div>
+                        <p class="info-value">Browse Events</p>
+                        <p class="venue-address">Discover new events to attend</p>
+                    </div>
+                </a>
+                <a th:href="@{/customer/bookings}" class="panel venue-card-inner" style="align-items: center;">
+                    <div class="venue-icon icon-green" style="background: var(--green-100); color: var(--green-600);">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                    </div>
+                    <div>
+                        <p class="info-value">My Bookings</p>
+                        <p class="venue-address">View all your reservations</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Recent Bookings -->
+            <div class="panel">
+                <div class="table-toolbar">
+                    <h2 class="panel-title" style="margin-bottom: 0;">Recent Bookings</h2>
+                    <a th:href="@{/customer/bookings}" class="back-link" style="margin-bottom: 0; color: var(--primary-600); font-weight: 600;">View All &rarr;</a>
+                </div>
+                <div class="recent-list" th:if="${!#lists.isEmpty(bookings)}">
+                    <a th:each="b : ${#lists.size(bookings) > 5 ? bookings.subList(0, 5) : bookings}"
+                       th:href="@{'/customer/bookings/' + ${b.id}}" class="recent-row">
+                        <div class="recent-avatar" th:text="${#strings.substring(b.eventTitle, 0, 1)}">K</div>
+                        <div class="recent-main">
+                            <p class="recent-title" th:text="${b.eventTitle}">Event</p>
+                            <p class="recent-sub">
+                                <span th:text="${b.eventDate}">date</span> ·
+                                <span th:text="${b.ticketQuantity}">1</span> ticket(s) ·
+                                <span th:text="${#numbers.formatDecimal(b.total, 1, 0, 'COMMA')}">0</span> ₮
+                            </p>
+                        </div>
+                        <span class="badge" th:classappend="'status-' + ${b.status}" th:text="${b.status}">CONFIRMED</span>
+                    </a>
+                </div>
+                <div class="empty-state" th:if="${#lists.isEmpty(bookings)}">
+                    <div class="empty-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+                    </div>
+                    <h3>No bookings yet</h3>
+                    <p>Browse events and book your first ticket!</p>
+                    <a th:href="@{/events}" class="btn btn-primary">Browse Events</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>&copy; 2026 KiloE. All rights reserved.</p></div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Bookings - Admin | KiloE</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../../static/css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+
+        <div th:replace="~{admin/fragments :: sidebar('bookings')}"></div>
+
+        <div class="main-content">
+            <header class="admin-topbar"><h1>Manage Bookings</h1></header>
+
+            <div class="admin-content">
+                <!-- Filter -->
+                <div class="table-toolbar">
+                    <input type="text" id="searchInput" placeholder="Search by event or user..." class="form-control" style="max-width: 280px;">
+                    <select id="statusFilter" class="form-control" style="max-width: 200px;">
+                        <option value="all">All Statuses</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="CONFIRMED">Confirmed</option>
+                        <option value="CANCELLED">Cancelled</option>
+                        <option value="COMPLETED">Completed</option>
+                    </select>
+                </div>
+
+                <!-- Table -->
+                <div class="panel" style="padding: 0; overflow: hidden;">
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Event</th>
+                                    <th>Tickets</th>
+                                    <th>Total</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th style="text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bookingsTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div id="emptyTable" class="empty-state hidden"><h3>No bookings found</h3></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/admin-bookings.js}" src="../../static/js/admin-bookings.js"></script>
+</body>
+</html>
